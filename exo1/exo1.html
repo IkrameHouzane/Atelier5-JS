@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .profile-card {
+            background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .profile-avatar {
+            border: 4px solid #6366f1;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover .profile-avatar {
+            transform: scale(1.05);
+            border-color: #4f46e5;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-header {
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+        }
+        
+        .table-row:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        .table-row:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .highlight-text {
+            color: #6366f1;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center p-6 gap-8">
+    
+</body>
+</html>
+<script>
+// 1. Fonction asynchrone pour récupérer les données
+async function fetchUserData() {
+    const userData = {
+        name: 'Ikrame Houzane',
+        email: 'ikramehz@gmail.com',
+        avatar: 'ikrame.jpg',
+        gender: 'F',
+        login: 'ikrame_hz',
+        password: 'password',
+        address: 'Tanger'
+    };
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(userData), 2000);
+    });
+}
+
+// 2. Affichage avec thème profile
+async function displayUserProfile() {
+    try {
+        const user = await fetchUserData();
+        const profileDiv = document.createElement('div');
+        profileDiv.className = 'profile-card p-8 text-center w-96';
+        profileDiv.innerHTML = `
+            <img src="${user.avatar}" alt="Avatar" class="w-32 h-32 mx-auto rounded-full profile-avatar object-cover mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">${user.name}</h2>
+            <p class="text-indigo-600 mb-1"><span class="highlight-text">Email:</span> ${user.email}</p>
+            <p class="text-gray-600 mb-1"><span class="highlight-text">Genre:</span> ${user.gender}</p>
+            <p class="text-gray-600 mb-1"><span class="highlight-text">Login:</span> ${user.login}</p>
+            <p class="text-gray-600"><span class="highlight-text">Adresse:</span> ${user.address}</p>
+            <div class="mt-6 pt-6 border-t border-gray-100">
+                <p class="text-sm text-gray-500">Dernière connexion: aujourd'hui</p>
+            </div>
+        `;
+        document.body.appendChild(profileDiv);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+
+// 3. Affichage dans un tableau
+async function displayUsersTable() {
+    const user = await fetchUserData();
+    const table = document.createElement('table');
+    table.className = 'data-table w-full max-w-2xl';
+    table.innerHTML = `
+        <thead>
+            <tr class="table-header text-white">
+                <th class="py-4 px-6 text-left">Champ</th>
+                <th class="py-4 px-6 text-left">Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${Object.entries(user).map(([key, value]) => `
+                <tr class="table-row">
+                    <td class="py-3 px-6 font-medium text-gray-700">${key}</td>
+                    <td class="py-3 px-6 text-gray-600">${value}</td>
+                </tr>
+            `).join('')}
+        </tbody>
+    `;
+    document.body.appendChild(table);
+}
+
+// 4. Chaînage de Promises
+async function fetchUserOrders(user) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(['Order1', 'Order2']), 1000);
+    });
+}
+
+async function processUserSequence() {
+    try {
+        const user = await fetchUserData();
+        const orders = await fetchUserOrders(user);
+        console.log('Utilisateur:', user);
+        console.log('Commandes:', orders);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+
+// Appel des fonctions
+displayUserProfile();
+displayUsersTable();
+processUserSequence();
+</script>
