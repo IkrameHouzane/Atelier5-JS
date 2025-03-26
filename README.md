@@ -33,7 +33,7 @@ Se familiariser avec les concepts de programmation asynchrone en JavaScript et l
 
 ### 📈 Exercice 4 : Stocks temps réel
 
-** ⚠️ L'implémentation des WebSockets (Exercice 4) n'a pas été réalisée** en raison d'une incompatibilité technique avec PHP 8.
+**⚠️ L'implémentation des WebSockets (Exercice 4) n'a pas été réalisée** en raison d'une incompatibilité technique avec PHP 8.
  **Étapes prévues :**
 - Configuration de Laravel WebSockets et Pusher. 
 - Création de la migration stocks {id, product_name, quantity}. 
